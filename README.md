@@ -1,1 +1,1 @@
-# Wharton-High-School-Sigma-Investing-
+# Sigma Investing's WGHS Source Codes
