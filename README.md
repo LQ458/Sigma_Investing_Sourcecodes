@@ -22,7 +22,7 @@ Sigma_Investing_Sourcecodes/
 │ ├── TOPSIS_Results.html
 │
 ├── LICENSE/
-
+|
 └── README.md
 
 
@@ -39,7 +39,6 @@ cd Sigma_Investing_Sourcecodes/TOPSIS(Macro_Analysis)
 3. Make sure Python3 and the required middleware have been installed.
 
 4. Execute the main Python script:
-
 python TOPSIS.py
 
 5. The output will be generated, showing the ranking of investment alternatives based on the TOPSIS method. Evaluate the results and make informed investment decisions accordingly.
