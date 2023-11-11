@@ -2,9 +2,7 @@
 
 ## Project Overview
 
-Sigma Investing is a finance based team that focuses on providing efficient investment solutions using modern decision-making techniques. This repository contains the source code for our TOPSIS (Technique for Order of Preference by Similarity to Ideal Solution) based investment decision-making model. The project aims to select the best investment options by comparing various alternatives and measuring their performance relative to the ideal solution.
-
-Middleware is software that acts as a bridge between the operating system or database and the various applications in the project. The following section will cover the required middleware that must be downloaded and installed for the successful execution of this project.
+Sigma Investing is a team that focuses on providing efficient investment solutions using modern decision-making techniques. This repository contains the source code for our investment report (for our client Hilary Ash).
 
 ## Required Middleware
 
