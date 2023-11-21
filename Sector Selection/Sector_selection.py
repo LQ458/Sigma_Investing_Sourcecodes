@@ -19,5 +19,29 @@ sector_data_normalized[columns_to_normalize] = scaler.fit_transform(sector_data[
 # Invert the P/E Ratio (since lower P/E is better)
 sector_data_normalized['Regular P/E Ratio'] = 1 - sector_data_normalized['Regular P/E Ratio']
 
-# Check the normalized data
-sector_data_normalized.head()
+weights = {
+    'PESTEL Analysis Score': 0.20,
+    'Regular P/E Ratio': 0.20,
+    'S&P 500 5 Year Index Growth Rate (%)': 0.30,
+    'S&P 500 10 Year Index Growth Rate (%)': 0.30
+}
+
+# Calculating the weighted score
+sector_data_normalized['Weighted Score'] = (
+    sector_data_normalized['PESTEL Analysis Score'] * weights['PESTEL Analysis Score'] + 
+    sector_data_normalized['Regular P/E Ratio'] * weights['Regular P/E Ratio'] + 
+    sector_data_normalized['S&P 500 5 Year Index Growth Rate (%)'] * weights['S&P 500 5 Year Index Growth Rate (%)'] + 
+    sector_data_normalized['S&P 500 10 Year Index Growth Rate (%)'] * weights['S&P 500 10 Year Index Growth Rate (%)']
+)
+
+ranked_sectors = sector_data_normalized.sort_values('Weighted Score', ascending=False)
+
+ranked_sectors[['Sectors', 'Weighted Score']]
+
+top_6_sectors = ranked_sectors.head(6)
+
+total_score_top_6 = top_6_sectors['Weighted Score'].sum()
+top_6_sectors['Allocation (%)'] = (top_6_sectors['Weighted Score'] / total_score_top_6) * 100
+
+# Displaying the allocation for the top 6 sectors
+top_6_sectors[['Sectors', 'Allocation (%)']]
