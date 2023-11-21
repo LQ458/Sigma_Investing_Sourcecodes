@@ -8,8 +8,6 @@ sector_data.loc[sector_data['Sectors'] == 'Consumer Discretionary', 'PESTEL Anal
 
 sector_data['PESTEL Analysis Score'] = sector_data['PESTEL Analysis Score'].apply(lambda x: float(x.split('/')[0]))
 
-sector_data.head()
-
 scaler = MinMaxScaler()
 
 columns_to_normalize = ['PESTEL Analysis Score', 'Regular P/E Ratio', 'S&P 500 5 Year Index Growth Rate (%)', 'S&P 500 10 Year Index Growth Rate (%)']
