@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 # Sample data
 data = {
-    'Category': ['Information Technology', 'Industrials', 'Cons_Discretionary', 'Materials', 'Financials', 'Health Care', 'Energy', 'Cons_Services'],
+    'Category': ['Information Technology', 'Industrials', 'Cons_Discretionary', 'Materials', 'Financials', 'Health Care', 'Energy', 'Communication Services'],
     'Value1': [30.23, 16.21, 15.90, 12.08, 12.82, 12.75, 0, 0],
     'Value2': [29.94, 15.25, 13.40, 12.08, 0, 0, 14.93, 13.33]
 }
@@ -33,3 +33,4 @@ ax.legend()
 
 # Show the plot
 plt.show()
+
