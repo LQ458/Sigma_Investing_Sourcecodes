@@ -1,60 +1,44 @@
 import pandas as pd
-import matplotlib.pyplot as plt
+import numpy as np
+from sklearn.preprocessing import MinMaxScaler
 import seaborn as sns
+import matplotlib.pyplot as plt
 
-# Load the data from the Excel file
+# Load the data
 file_path = '/[path to data].xlsx'
-sector_data = pd.read_excel(file_path)
+data = pd.read_excel(file_path)
 
-sector_data['PESTEL Analysis Score'] = sector_data['PESTEL Analysis Score'].replace('17//30', '17/30')
+# Data cleaning and preparation
+data['PESTEL Analysis Score'] = data['PESTEL Analysis Score'].str.replace('//', '/')
+data['PESTEL Analysis Score'] = data['PESTEL Analysis Score'].apply(lambda x: float(x.split('/')[0])/float(x.split('/')[1]))
+data['Regular P/E Ratio'] = 1 / data['Regular P/E Ratio']  # Invert P/E Ratio
 
-sector_data['PESTEL Analysis Score'] = sector_data['PESTEL Analysis Score'].apply(lambda x: float(x.split('/')[0]))
-sector_data['Inverted PESTEL Score'] = sector_data['PESTEL Analysis Score'].max() / sector_data['PESTEL Analysis Score']
-sector_data['Inverted P/E Ratio'] = sector_data['Regular P/E Ratio'].max() / sector_data['Regular P/E Ratio']
+# Normalize the data
+scaler = MinMaxScaler()
+normalized_data = pd.DataFrame(scaler.fit_transform(data.iloc[:, 1:]), columns=data.columns[1:])
 
-weights = {
-    'Inverted PESTEL Score': 0.20,
-    'Inverted P/E Ratio': 0.20,
-    'S&P 500 5 Year Index Growth Rate (%)': 0.10,
-    'S&P 500 10 Year Index Growth Rate (%)': 0.50
-}
+new_weights = np.array([0.20, 0.20, 0.10, 0.50])
 
-# Calculate the weighted score for each sector
-sector_data['Weighted Score'] = (sector_data['Inverted PESTEL Score'] * weights['Inverted PESTEL Score'] +
-                                 sector_data['Inverted P/E Ratio'] * weights['Inverted P/E Ratio'] +
-                                 sector_data['S&P 500 5 Year Index Growth Rate (%)'] * weights['S&P 500 5 Year Index Growth Rate (%)'] +
-                                 sector_data['S&P 500 10 Year Index Growth Rate (%)'] * weights['S&P 500 10 Year Index Growth Rate (%)'])
+# Calculate the new weighted scores
+data['New Weighted Score'] = normalized_data.dot(new_weights)
 
-# Sorting the sectors based on the weighted score
-ranked_sectors = sector_data.sort_values('Weighted Score', ascending=False)
+# Sort the data and select the top 6 sectors
+new_top_sectors = data.sort_values(by='New Weighted Score', ascending=False).head(6)
 
-top_6_sectors = ranked_sectors.head(6)
-top_6_sectors[['Sectors', 'Weighted Score']]
+# Calculate new investment allocations
+total_new_score = new_top_sectors['New Weighted Score'].sum()
+new_top_sectors['New Investment Allocation (%)'] = (new_top_sectors['New Weighted Score'] / total_new_score) * 100
 
-sns.set(style="whitegrid")
+# Visualization
+new_visualization_data = new_top_sectors[['Sectors', 'New Investment Allocation (%)']].set_index('Sectors')
 
-plt.figure(figsize=(12, 6))
-sns.barplot(x='Weighted Score', y='Sectors', data=top_6_sectors, palette='coolwarm')
-
-plt.title('Top 6 Best Performing Sectors Based on Weighted Analysis', fontsize=16)
-plt.xlabel('Weighted Score', fontsize=12)
-plt.ylabel('Sectors', fontsize=12)
-
+plt.figure(figsize=(10, 6))
+sns.barplot(x=new_visualization_data['New Investment Allocation (%)'], y=new_visualization_data.index, palette="magma")
+plt.xlabel('New Investment Allocation (%)')
+plt.ylabel('Sectors')
+plt.title('Top 6 Best Performing Sectors with Updated Weights and Their Investment Allocations')
+plt.grid(axis='x')
 plt.show()
 
-total_score = top_6_sectors['Weighted Score'].sum()
-
-top_6_sectors['Allocation Proportion'] = top_6_sectors['Weighted Score'] / total_score
-
-it_allocation = 0.40 
-remaining_allocation = 1 - it_allocation 
-
-top_6_sectors.loc[top_6_sectors['Sectors'] == 'Information Technology', 'Allocation Proportion'] = it_allocation
-
-top_6_sectors['Adjusted Allocation Proportion'] = top_6_sectors.apply(
-    lambda row: row['Allocation Proportion'] * remaining_allocation 
-    if row['Sectors'] != 'Information Technology' else row['Allocation Proportion'],
-    axis=1
-)
-
-top_6_sectors[['Sectors', 'Adjusted Allocation Proportion']]
+# Display the new top sectors and their allocations
+new_top_sectors[['Sectors', 'New Investment Allocation (%)']]
