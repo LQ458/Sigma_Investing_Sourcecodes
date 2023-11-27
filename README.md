@@ -11,21 +11,21 @@ Sigma Investing is a team that focuses on providing efficient investment solutio
 3. **Numpy** - A fundamental library for mathematical operations and support for arrays and matrices: `pip install numpy`
 
 ## Directory Structure
-Sigma_Investing_Sourcecodes/ \n
-├── TOPSIS/ \n
-│   ├── TOPSIS.py \n
-│   └── TOPSIS_Results.html \n
-├── ETF_Selection/ \n
-│   ├── ETF.csv \n
-│   └── scoreCalculation.py \n
-├── Industry Selection/ \n
-│   └── select.py \n
-├── Sector Selection/ \n
-│   ├── Long_term.py \n
-│   ├── Short_term.py \n
-│   └── bi-directional.py \n
-├── LICENSE/ \n
-└── README.md \n
+Sigma_Investing_Sourcecodes/ <br>
+├── TOPSIS/ <br>
+│   ├── TOPSIS.py <br>
+│   └── TOPSIS_Results.html <br>
+├── ETF_Selection/ <br>
+│   ├── ETF.csv <br>
+│   └── scoreCalculation.py <br>
+├── Industry Selection/ <br>
+│   └── select.py <br>
+├── Sector Selection/ <br>
+│   ├── Long_term.py <br>
+│   ├── Short_term.py <br>
+│   └── bi-directional.py <br>
+├── LICENSE/ <br>
+└── README.md
 
 ## Setup and Usage
 
