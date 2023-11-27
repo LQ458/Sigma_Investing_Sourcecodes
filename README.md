@@ -29,7 +29,7 @@ Sigma_Investing_Sourcecodes/
 
 
 2. Navigate to the source code directory:
-example: `cd Sigma_Investing_Sourcecodes/TOPSIS(Macro_Analysis)`
+example: `cd Sigma_Investing_Sourcecodes/TOPSIS`
 
 
 3. Make sure Python3 and the required middleware have been installed.
