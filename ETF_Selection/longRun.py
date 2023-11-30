@@ -83,4 +83,4 @@ df["Score"] = scores
 df = df.sort_values(by="Score", ascending=False)
 
 # Print Ranking Results
-print(df[["name", "Score"]])
+print(df[["name","asset_class", "Score"]])
