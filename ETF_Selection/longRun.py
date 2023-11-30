@@ -27,10 +27,9 @@ class ETF:
     def calculate_aggressive_score(self):
         score = 0
 
-        # Standard Deviation (30% weight)
-        std_dev_entropy = self.calculate_entropy(["Low", "Medium", "High"],
-                                                 [0.1, 0.3, 0.6], self.categorize_std_dev())
-        score += std_dev_entropy * 30
+        # Calculating scores using standard deviation
+        std_dev_weight = 1 - (self.std_dev_1yr / 30)
+        score += max(0, std_dev_weight) * 30
 
         # Market Cap Focus (25% weight)
         market_cap_entropy = self.calculate_entropy(["Small-cap", "Mid-cap", "Large-cap"],
@@ -48,26 +47,6 @@ class ETF:
 
         return score
     
-    # Helper methods for categorizing indicators
-    def categorize_expense_ratio(self):
-        # Categorize the expense ratio
-        if self.expense_ratio < 0.1:
-            return "Low"
-        elif self.expense_ratio < 0.2:
-            return "Medium"
-        else:
-            return "High"
-
-    def categorize_std_dev(self):
-        # Categorize the standard deviation
-        if self.std_dev_1yr < 10:
-            return "Low"
-        elif self.std_dev_1yr < 20:
-            return "Medium"
-        else:
-            return "High"
-
-
     @staticmethod
     def calculate_entropy(labels, weights, value):
         prob_distribution = np.array([weights[labels.index(label)] if label == value else 0 for label in labels], dtype=float)
