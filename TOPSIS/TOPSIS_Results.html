@@ -20,10 +20,16 @@
     var option;
 
     option = {
+      textStyle: {
+        fontSize: 30
+    },
   color: ['#80FFA5', '#00DDFF', '#37A2FF', '#FF0087', '#FFBF00'],
   title: {
-    text: 'Macro Analysis'
-  },
+        text: 'Macro Analysis',
+        textStyle: {
+            fontSize: 30
+        }
+    },
   tooltip: {
     trigger: 'axis',
     axisPointer: {
@@ -51,12 +57,22 @@
     {
       type: 'category',
       boundaryGap: false,
-      data: ['Brazil', 'China', 'India', 'UK', 'USA']
+      data: ['Brazil', 'China', 'India', 'UK', 'USA'],
+      axisLabel: {
+                textStyle: {
+                    fontSize: 30
+                }
+            }
     }
   ],
   yAxis: [
     {
-      type: 'value'
+      type: 'value',
+      axisLabel: {
+                textStyle: {
+                    fontSize: 25
+                }
+            }
     }
   ],
   series: [
